@@ -1,14 +1,9 @@
 require_relative 'valid_date'
 
-class App
+class TimeApp
   def call(env)
     @request = Rack::Request.new(env)
-
-    if @request.path == '/time'
-      time_format(@request.params)
-    else
-      response 404, 'Not found'
-    end
+    time_format(@request.params)
   end
 
   private
@@ -22,11 +17,7 @@ class App
     end
   end
 
-  def headers
-    { 'content-type' => 'text/plain' }
-  end
-
   def response(status, body)
-    [status, headers, [body + "\n"]]
+    [status, {}, [body + "\n"]]
   end
 end
